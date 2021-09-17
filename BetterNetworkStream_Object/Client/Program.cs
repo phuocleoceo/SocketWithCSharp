@@ -9,16 +9,16 @@ namespace Client
 {
     class Program
     {
-        static Socket client;
+        static TcpClient client;
         static NetworkStream stream;
         static StreamReader reader;
         static StreamWriter writer;
 
         static void InitStream()
         {
-            client = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            client = new TcpClient();
             client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1308));
-            stream = new NetworkStream(client);
+            stream = client.GetStream();
             reader = new StreamReader(stream);
             writer = new StreamWriter(stream) { AutoFlush = true };
         }
@@ -35,7 +35,7 @@ namespace Client
                 string Name = Console.ReadLine();
                 Console.Write(">>Nhập Giá : ");
                 double Price = Convert.ToDouble(Console.ReadLine());
-                DateTime ExpiryDay = new DateTime(2001,08,10);
+                DateTime ExpiryDay = new DateTime(2001, 08, 10);
 
                 Drink d = new Drink
                 {
@@ -45,7 +45,10 @@ namespace Client
                     ExpiryDay = ExpiryDay
                 };
 
-                writer.WriteLine(d.Serialization_Text());
+                writer.WriteLine(d.Drink_Serialization());
+                //Console.WriteLine(">>Command : ");
+                //string request = Console.ReadLine();
+                //writer.WriteLine(request);
 
                 string response = reader.ReadLine();
                 Console.WriteLine(response);
