@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GET_STREAM_AND_BYTES", "GET
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEND_ASYNC", "SEND_ASYNC\SEND_ASYNC.csproj", "{AF387AE7-2694-42DF-A76E-88D1E17E2F99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HANDLE_CLASS", "HANDLE_CLASS\HANDLE_CLASS.csproj", "{49D9955E-AD36-4126-8A18-57EE8A30DBC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AF387AE7-2694-42DF-A76E-88D1E17E2F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF387AE7-2694-42DF-A76E-88D1E17E2F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF387AE7-2694-42DF-A76E-88D1E17E2F99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49D9955E-AD36-4126-8A18-57EE8A30DBC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D9955E-AD36-4126-8A18-57EE8A30DBC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D9955E-AD36-4126-8A18-57EE8A30DBC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D9955E-AD36-4126-8A18-57EE8A30DBC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
