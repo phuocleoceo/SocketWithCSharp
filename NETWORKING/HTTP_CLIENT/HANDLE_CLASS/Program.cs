@@ -94,6 +94,7 @@ namespace HANDLE_CLASS
             string result = await response.Content.ReadAsStringAsync();
             Console.WriteLine(result);
         }
+
         static async Task Main(string[] args)
         {
             await HttpClientHandler_Handle("https://postman-echo.com/post");
