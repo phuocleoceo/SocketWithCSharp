@@ -49,6 +49,7 @@ namespace HTTP_LISTENER_ADVANCED
 
             }
             while (listener.IsListening);
+            listener.Stop();
         }
 
         // Xử lý trả về nội dung tùy thuộc vào URL truy cập
@@ -110,10 +111,10 @@ namespace HTTP_LISTENER_ADVANCED
                         await outputstream.WriteAsync(buffer, 0, buffer.Length);
                     }
                     break;
-                case "/anh2.png":
+                case "/image.jpg":
                     {
                         response.Headers.Add("Content-Type", "image/png");
-                        byte[] buffer = await File.ReadAllBytesAsync("anh2.png");
+                        byte[] buffer = await File.ReadAllBytesAsync("image.jpg");
                         response.ContentLength64 = buffer.Length;
                         await outputstream.WriteAsync(buffer, 0, buffer.Length);
                     }
@@ -121,7 +122,7 @@ namespace HTTP_LISTENER_ADVANCED
                 default:
                     {
                         response.StatusCode = (int)HttpStatusCode.NotFound;
-                        byte[] buffer = System.Text.Encoding.UTF8.GetBytes("NOT FOUND!");
+                        byte[] buffer = Encoding.UTF8.GetBytes("NOT FOUND!");
                         response.ContentLength64 = buffer.Length;
                         await outputstream.WriteAsync(buffer, 0, buffer.Length);
                     }
@@ -159,21 +160,21 @@ namespace HTTP_LISTENER_ADVANCED
             //Extract request properties
             body.Append("<h2>Request properties:</h2>");
             var properties = request.GetType().GetProperties();
-            foreach (var property in properties)
-            {
-                var name_pro = property.Name;
-                string value_pro;
-                try
-                {
-                    value_pro = property.GetValue(request).ToString();
-                }
-                catch (Exception e)
-                {
-                    value_pro = e.Message;
-                }
-                body.Append($"<div>{name_pro} : {value_pro}</div>");
+            //foreach (var property in properties)
+            //{
+            //    var name_pro = property.Name;
+            //    string value_pro;
+            //    try
+            //    {
+            //        value_pro = property.GetValue(request).ToString();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        value_pro = e.Message;
+            //    }
+            //    body.Append($"<div>{name_pro} : {value_pro}</div>");
 
-            };
+            //};
             string html = string.Format(format, head, body.ToString());
             return html;
         }

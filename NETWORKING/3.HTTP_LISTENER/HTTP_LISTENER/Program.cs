@@ -75,21 +75,21 @@ namespace HTTP_LISTENER
             //Extract request properties
             body.Append("<h2>Request properties:</h2>");
             var properties = request.GetType().GetProperties();
-            foreach (var property in properties)
-            {
-                var name_pro = property.Name;
-                string value_pro;
-                try
-                {
-                  value_pro = property.GetValue(request).ToString();
-                }
-                catch (Exception e)
-                {
-                    value_pro = e.Message;
-                }
-                body.Append($"<div>{name_pro} : {value_pro}</div>");
+            //foreach (var property in properties)
+            //{
+            //    var name_pro = property.Name;
+            //    string value_pro;
+            //    try
+            //    {
+            //      value_pro = property.GetValue(request).ToString();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        value_pro = e.Message;
+            //    }
+            //    body.Append($"<div>{name_pro} : {value_pro}</div>");
 
-            };
+            //};
             string html = string.Format(format, head, body.ToString());
             return Encoding.UTF8.GetBytes(html);
         }

@@ -7,9 +7,10 @@ namespace HTTP_LISTENER_ADVANCED
     {
         static async Task Main(string[] args)
         {
-            var server = new MyHttpServer(new string[] { "http://*:8080/" });
+            MyHttpServer server = new MyHttpServer(new string[] { "http://*:8080/" });
             await server.StartAsync();
 
+            // Run CMD as Administrator
             // netsh http add urlacl url=http://*:8080/ user=Admin
         }
     }
