@@ -25,9 +25,7 @@ namespace HANDLE_CLASS
             using HttpClient httpClient = new HttpClient(handler);
 
             // Tạo HttpRequestMessage
-            using HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(url);
+            using HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, url);
             httpRequestMessage.Headers.Add("User-Agent", "Mozilla/5.0");
             List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>()
             {
@@ -42,7 +40,7 @@ namespace HANDLE_CLASS
             // Hiện thị các cookie (các cookie trả về có thể sử dụng cho truy vấn tiếp theo)
             cookies.GetCookies(new Uri(url)).ToList().ForEach(cookie =>
             {
-                Console.WriteLine($"{cookie.Name} = {cookie.Value}");
+                Console.WriteLine($"{cookie.Name} = {cookie.Value}\n");
             });
 
             // Đọc chuỗi nội dung trả về (HTML)
@@ -67,11 +65,8 @@ namespace HANDLE_CLASS
             // Tạo HttpClient - thiết lập handler cho nó
             using HttpClient httpClient = new HttpClient(handler);
 
-
             // Tạo HttpRequestMessage
-            using HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(url);
+            using HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, url);
             httpRequestMessage.Headers.Add("User-Agent", "Mozilla/5.0");
             httpRequestMessage.Headers.Add("Accept", "text/html,application/xhtml+xml+json");
 
@@ -86,8 +81,9 @@ namespace HANDLE_CLASS
             HttpResponseMessage response = await httpClient.SendAsync(httpRequestMessage);
 
             // Hiện thị các cookie (các cookie trả về có thể sử dụng cho truy vấn tiếp theo)
-            cookies.GetCookies(new Uri(url)).ToList().ForEach(cookie => {
-                Console.WriteLine($"{cookie.Name} = {cookie.Value}");
+            cookies.GetCookies(new Uri(url)).ToList().ForEach(cookie =>
+            {
+                Console.WriteLine($"{cookie.Name} = {cookie.Value}\n");
             });
 
             // Đọc chuỗi nội dung trả về (HTML)
