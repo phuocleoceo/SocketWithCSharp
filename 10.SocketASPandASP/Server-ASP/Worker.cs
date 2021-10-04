@@ -8,12 +8,16 @@ using Microsoft.Extensions.Logging;
 using System.Net.Sockets;
 using System.Net;
 using System.IO;
+using System.Text;
 
 namespace Server_ASP
 {
 	public class Worker : BackgroundService
 	{
 		private readonly ILogger<Worker> _logger;
+
+		//public StringBuilder Content { get; set; }
+		public string MSG { get; set; }
 
 		public Worker(ILogger<Worker> logger)
 		{
@@ -35,7 +39,8 @@ namespace Server_ASP
 
 				string request = reader.ReadLine();
 				_logger.LogWarning($">> Request from {worker.Client.RemoteEndPoint} : {request}");
-
+				//this.Content.AppendLine(request);
+				this.MSG = request;
 				worker.Close();
 			}
 		}
