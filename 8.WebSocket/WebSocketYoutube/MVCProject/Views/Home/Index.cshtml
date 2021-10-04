@@ -1,0 +1,15 @@
+﻿@{
+	ViewData["Title"] = "Socket Chat";
+}
+
+<div class="text-center">
+	<h1>WebSocket Client</h1>
+	<br>
+	<input type="text" placeholder="Your message ..." id="messageToSend">
+	<button id="sendButton">Send</button>
+	<ul id="messages"></ul>
+</div>
+
+@section Scripts{
+<script src="~/js/socket.js"></script>
+}
