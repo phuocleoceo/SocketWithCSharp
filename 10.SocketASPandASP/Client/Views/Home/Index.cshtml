@@ -1,0 +1,18 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+	<h1>WebSocket Client</h1>
+	<br>
+	<input type="text" placeholder="Your message ..." id="messageToSend">
+	<button class="btn btn-success" id="sendButton">Send</button>
+	@* <a asp-controller="Home" asp-action="SendMessage" asp-route-message="HIHI" class="btn btn-primary
+		mx-2">Submit</a> *@
+	<ul id="messages"></ul>
+</div>
+
+@section Scripts{
+<script src="~/js/socket.js"></script>
+}
