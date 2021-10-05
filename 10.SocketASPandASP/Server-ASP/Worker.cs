@@ -9,40 +9,61 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Text;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Server_ASP
 {
 	public class Worker : BackgroundService
 	{
 		private readonly ILogger<Worker> _logger;
+		private readonly IMemoryCache _memoryCache;
+		private TcpListener server;
+		private TcpClient worker;
+		private NetworkStream stream;
+		private StreamReader reader;
+		private StreamWriter writer;
 
-		//public StringBuilder Content { get; set; }
-		public string MSG { get; set; }
-
-		public Worker(ILogger<Worker> logger)
+		public Worker(ILogger<Worker> logger, IMemoryCache memoryCache)
 		{
 			_logger = logger;
+			_memoryCache = memoryCache;
 		}
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
-			TcpListener server = new TcpListener(IPAddress.Parse("127.0.0.1"), 1308);
+			server = new TcpListener(IPAddress.Parse("127.0.0.1"), 1308);
 			server.Start(10);
 			_logger.LogInformation($"<< Server started at {server.LocalEndpoint} >>");
 
-			while (true)
+			while (!stoppingToken.IsCancellationRequested)
 			{
-				TcpClient worker = await server.AcceptTcpClientAsync();
-				NetworkStream stream = worker.GetStream();
-				StreamReader reader = new StreamReader(stream);
-				StreamWriter writer = new StreamWriter(stream) { AutoFlush = true };
+				try
+				{
+					worker = await server.AcceptTcpClientAsync();
+					stream = worker.GetStream();
+					reader = new StreamReader(stream);
+					writer = new StreamWriter(stream) { AutoFlush = true };
 
-				string request = reader.ReadLine();
-				_logger.LogWarning($">> Request from {worker.Client.RemoteEndPoint} : {request}");
-				//this.Content.AppendLine(request);
-				this.MSG = request;
-				worker.Close();
+					string request = reader.ReadLine();
+					_logger.LogWarning($">> Request from {worker.Client.RemoteEndPoint} : {request}");
+
+					_memoryCache.Set("RequestMsg", request);
+					worker.Close();
+				}
+				catch
+				{
+					await Task.Delay(TimeSpan.FromSeconds(3), stoppingToken);
+				}
 			}
+		}
+
+		public override void Dispose()
+		{
+			if (server != null)
+			{
+				server.Server.Dispose();
+			}
+			base.Dispose();
 		}
 	}
 }

@@ -22,10 +22,6 @@ namespace Server_ASP
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
-				})
-				.ConfigureServices(services =>
-				{
-					services.AddHostedService<Worker>();
 				});
 	}
 }
