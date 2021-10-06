@@ -1,5 +1,10 @@
 @{
 	ViewData["Title"] = "Privacy";
+	string msg = ViewBag.msg ?? "";
+	string[] list = msg.Split("\n");
 }
 
-<h1>@ViewBag.msg</h1>
+@foreach (string s in list)
+{
+	<h1>@s</h1>
+}

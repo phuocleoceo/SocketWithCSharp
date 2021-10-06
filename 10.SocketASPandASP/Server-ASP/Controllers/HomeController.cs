@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -9,12 +10,12 @@ namespace Server_ASP.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-		private readonly IMemoryCache _memoryCache;
+		private readonly IMemoryCache _cache;
 
-		public HomeController(ILogger<HomeController> logger, IMemoryCache memoryCache)
+		public HomeController(ILogger<HomeController> logger, IMemoryCache cache)
 		{
 			_logger = logger;
-			_memoryCache = memoryCache;
+			_cache = cache;
 		}
 
 		public IActionResult Index()
@@ -24,7 +25,7 @@ namespace Server_ASP.Controllers
 
 		public IActionResult Privacy()
 		{
-			if (_memoryCache.TryGetValue("RequestMsg", out string msg))
+			if (_cache.TryGetValue<string>("RequestMsg", out string msg))
 			{
 				ViewBag.msg = msg;
 			}

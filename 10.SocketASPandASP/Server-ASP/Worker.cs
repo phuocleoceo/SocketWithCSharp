@@ -16,17 +16,17 @@ namespace Server_ASP
 	public class Worker : BackgroundService
 	{
 		private readonly ILogger<Worker> _logger;
-		private readonly IMemoryCache _memoryCache;
+		private readonly IMemoryCache _cache;
 		private TcpListener server;
 		private TcpClient worker;
 		private NetworkStream stream;
 		private StreamReader reader;
 		private StreamWriter writer;
 
-		public Worker(ILogger<Worker> logger, IMemoryCache memoryCache)
+		public Worker(ILogger<Worker> logger, IMemoryCache cache)
 		{
 			_logger = logger;
-			_memoryCache = memoryCache;
+			_cache = cache;
 		}
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -47,7 +47,9 @@ namespace Server_ASP
 					string request = reader.ReadLine();
 					_logger.LogWarning($">> Request from {worker.Client.RemoteEndPoint} : {request}");
 
-					_memoryCache.Set("RequestMsg", request);
+					string oldMSG = _cache.GetOrCreate<string>("RequestMsg", c => "");
+					string newMSG = (new StringBuilder(oldMSG)).Append("\n" + request).ToString();
+					_cache.Set<string>("RequestMsg", newMSG);
 					worker.Close();
 				}
 				catch
