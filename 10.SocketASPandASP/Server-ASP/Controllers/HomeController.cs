@@ -10,12 +10,10 @@ namespace Server_ASP.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-		private readonly IMemoryCache _cache;
 
-		public HomeController(ILogger<HomeController> logger, IMemoryCache cache)
+		public HomeController(ILogger<HomeController> logger)
 		{
 			_logger = logger;
-			_cache = cache;
 		}
 
 		public IActionResult Index()
@@ -25,10 +23,6 @@ namespace Server_ASP.Controllers
 
 		public IActionResult Privacy()
 		{
-			if (_cache.TryGetValue<string>("RequestMsg", out string msg))
-			{
-				ViewBag.msg = msg;
-			}
 			return View();
 		}
 

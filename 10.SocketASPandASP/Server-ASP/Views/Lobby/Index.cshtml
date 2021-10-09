@@ -1,0 +1,14 @@
+@{
+	ViewData["Title"] = "Lobby";
+	string msg = ViewBag.msg ?? "";
+	string[] list = msg.Split("\n");
+}
+
+@foreach (string s in list)
+{
+	<h1>@s</h1>
+}
+
+@section Scripts{
+<script src="~/js/lobby.js"></script>
+}

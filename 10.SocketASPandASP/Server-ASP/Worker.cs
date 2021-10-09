@@ -48,7 +48,8 @@ namespace Server_ASP
 					_logger.LogWarning($">> Request from {worker.Client.RemoteEndPoint} : {request}");
 
 					string oldMSG = _cache.GetOrCreate<string>("RequestMsg", c => "");
-					string newMSG = (new StringBuilder(oldMSG)).Append("\n" + request).ToString();
+					StringBuilder sb = new StringBuilder(oldMSG);
+					string newMSG = sb.Append("\n" + request).ToString();
 					_cache.Set<string>("RequestMsg", newMSG);
 					worker.Close();
 				}
